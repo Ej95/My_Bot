@@ -14,8 +14,8 @@ class React(Cog_Extension): #繼承 Cog 類別
     @commands.command()
     async def chat(self,ctx,arg):
         client = AsyncOpenAI(api_key=jfile["api_key"])
-        res = await client.completions.create(model="gpt-3.5-turbo-instruct",prompt=arg,max_tokens=2048) #等待回覆生成 使用 await 異步
-        await ctx.send("{}".format(str(res.choices[0].text)))
+        res = await client.chat.completions.create(model="gpt-4",messages=[{"role": "user", "content": arg}],max_tokens=2048) #等待回覆生成 使用 await 異步
+        await ctx.send("{}".format(str(res.choices[0].message.content)))
 
     @commands.hybrid_command(name="打招呼")
     async def ping(self,ctx):
