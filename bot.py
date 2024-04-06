@@ -19,6 +19,7 @@ bot = commands.Bot(command_prefix="/",intents=intents)
 @bot.event
 async def on_ready():
     print("> Bot is online")
+    await bot.tree.sync()
 
 
 @bot.command()

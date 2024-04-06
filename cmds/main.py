@@ -5,8 +5,8 @@ from core.classes import Cog_Extension
 
 class Main(Cog_Extension): #繼承 Cog 類別
         
-    @commands.command()
-    async def ping(self,ctx): # ctx 代表上下文
+    @commands.hybrid_command(name="回傳伺服器延遲")
+    async def ping(self,ctx):
         await ctx.send("{} (ms)".format(round(self.bot.latency * 1000)))
         
 async def setup(bot):
