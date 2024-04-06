@@ -3,12 +3,15 @@ import json
 from discord.ext import commands
 from core.classes import Cog_Extension
 from openai import AsyncOpenAI
+import datetime
 
 with open(file=r"data.json",encoding="utf8") as file:
     jfile = json.load(file)
 
 
 class React(Cog_Extension): #繼承 Cog 類別  
+
+
 
     #回傳 AI 的回覆
     @commands.command()
@@ -23,34 +26,41 @@ class React(Cog_Extension): #繼承 Cog 類別
 
     @commands.hybrid_command(name="伺服器狀態")
     async def status(self,ctx):
+        count = 0
+        for member in ctx.guild.members:
+            if member.status != discord.Status.offline:
+                count +=1
+
+
+
         embed = discord.Embed(title="伺服器狀態",
-                      description="--------------------------------------------------------------",
+                      description="--------------------------------------------------",
                       colour=0xf59b00,
-                      timestamp=datetime.now())
+                      )
 
         embed.set_author(name="喜歡你耶",
-                        url="https://i.postimg.cc/9QHcW1S6/head.jpg",
-                        icon_url="https://i.postimg.cc/9QHcW1S6/head.jpg")
+                        url=r"https://i.postimg.cc/9QHcW1S6/head.jpg",
+                        icon_url=r"https://i.postimg.cc/9QHcW1S6/head.jpg")
 
         embed.add_field(name="伺服器延遲",
-                        value="** {}ms **".format(round(await self.bot.latency * 1000)),
+                        value="** {}ms **".format(round(self.bot.latency * 1000)),
                         inline=False)
         embed.add_field(name="伺服器人數",
-                        value="** {} **".format(await self.bot.users),
+                        value="** {} **".format(ctx.guild.member_count),
                         inline=True)
         embed.add_field(name="在線人數",
-                        value="**7 **",
+                        value="** {} **".format(count),
                         inline=True)
         embed.add_field(name="離線人數",
-                        value="**19**",
+                        value="** {} **".format(ctx.guild.member_count - count),
                         inline=True)
 
-        embed.set_image(url="https://i.postimg.cc/MHrhkq4S/Chipi-Chapa-GIF-Chipi-Chapa-Chipi-chipi-Descubre-y-comparte-GIF.gif")
+        embed.set_image(url=r"https://i.postimg.cc/MHrhkq4S/Chipi-Chapa-GIF-Chipi-Chapa-Chipi-chipi-Descubre-y-comparte-GIF.gif")
 
-        embed.set_thumbnail(url="https://i.postimg.cc/9QHcW1S6/head.jpg")
+        embed.set_thumbnail(url=r"https://i.postimg.cc/9QHcW1S6/head.jpg")
 
-        embed.set_footer(text="Example Footer",
-                        icon_url="https://slate.dan.onl/slate.png")
+        embed.set_footer(text="我是真的不能控制我自己",
+                        icon_url=r"https://slate.dan.onl/slate.png")
 
         await ctx.send(embed=embed)
 
